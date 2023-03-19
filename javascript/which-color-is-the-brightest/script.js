@@ -19,17 +19,17 @@ const convertDigitHexToDecimal = (inHex) => {
   switch (inHex) {
     case "0", "1", "2", "3", "4", "5", "6", "7", "8", "9":
       return Number(inHex);
-    case "A":
+    case "A", "a":
       return 10;
-    case "B":
+    case "B", "b":
       return 11;
-    case "C":
+    case "C", "c":
       return 12;
-    case "D":
+    case "D", "d":
       return 13;
-    case "E":
+    case "E", "e":
       return 14;
-    case "F":
+    case "F", "f":
       return 15;
     default:
   }
@@ -53,4 +53,4 @@ const getMaxFromColor = (inRrGgBb) => {
   return maxVal;
 };
 
-brightest(["#001000", "#000000", "#ABCDEF", "#123456"]);
+brightest(["#001000", "#000000", "#abcdef", "#ABCDEF", "#123456"]);
