@@ -10,3 +10,4 @@ Which color is the brightest? https://www.codewars.com/kata/62eb800ba29959001c07
 3. Перевод чисел из одной системы счисления в другую https://calcus.ru/perevod-sistem-schisleniya
 4. Преобразование типов https://learn.javascript.ru/type-conversions
 5. Конструкция "switch" http://bit.ly/3LycixW
+6. Document.createElement() https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement
