@@ -2,7 +2,7 @@
 [![JavaScript](https://img.shields.io/badge/JavaScript-000000??style=for-the-badge&logo=JavaScript&logoColor=F3E050)](https://developer.mozilla.org/)
 
 # Codewars
-Which color is the brightest? https://www.codewars.com/kata/62eb800ba29959001c07dfee
+Which color is the brightest?https://www.codewars.com/kata/62eb800ba29959001c07dfee
 
 ### Статьи по теме
 1. Подключение JavaScript к HTML https://wm-school.ru/js/javascript_in_HTML.php
