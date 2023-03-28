@@ -5,3 +5,4 @@
 N-th Fibonacci https://www.codewars.com/kata/522551eee9abb932420004a0
 
 ### References
+1. Числа Фибоначчи http://bit.ly/3nracpK 
