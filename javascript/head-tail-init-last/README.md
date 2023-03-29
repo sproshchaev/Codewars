@@ -5,3 +5,4 @@
 Head, Tail, Init and Last https://www.codewars.com/kata/54592a5052756d5c5d0009c3
 
 ### References
+1. Массивы https://learn.javascript.ru/array
