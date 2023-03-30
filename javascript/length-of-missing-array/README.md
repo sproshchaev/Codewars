@@ -6,4 +6,3 @@ Length of missing array https://www.codewars.com/kata/length-of-missing-array
 
 ### References
 1. String(value) https://learn.javascript.ru/type-conversions
-2. String.prototype.includes() https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes 
