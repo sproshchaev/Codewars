@@ -9,3 +9,4 @@ Pair of gloves https://www.codewars.com/kata/pair-of-gloves
 2. Стрелочные функции, основы https://learn.javascript.ru/arrow-functions-basics 
 3. Четыре метода поиска в массивах JavaScript https://www.digitalocean.com/community/tutorials/js-array-search-methods-ru
 4. Функция Math.trunc() возвращает целую часть числа путём удаления всех дробных знаков https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Math/trunc 
+5. Массивы https://learn.javascript.ru/array 
