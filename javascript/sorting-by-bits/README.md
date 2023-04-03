@@ -5,4 +5,6 @@
 Sorting by bits https://www.codewars.com/kata/sorting-by-bits
 
 ### References
-1. Преобразование числа в двоичный формат в JavaScript https://www.delftstack.com/ru/howto/javascript/convert-number-to-binary-in-javascript/
+1. forEach() JS — метод для перебора массива https://web-dev.guru/javascript/foreach-js-metod-dlja-perebora-massiva/
+2. Преобразование числа в двоичный формат в JavaScript https://www.delftstack.com/ru/howto/javascript/convert-number-to-binary-in-javascript/
+3. Array.prototype.sort() https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
