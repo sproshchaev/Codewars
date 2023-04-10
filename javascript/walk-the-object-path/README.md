@@ -5,3 +5,5 @@
 Walk the Object Path https://www.codewars.com/kata/walk-the-object-path
 
 ### References
+1. forEach() JS — метод для перебора массива https://web-dev.guru/javascript/foreach-js-metod-dlja-perebora-massiva/
+2. String.prototype.split() https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split
