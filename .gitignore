@@ -25,3 +25,10 @@ hs_err_pid*
 # other files
 .DS_Store
 .zip
+
+### IntelliJ IDEA ###
+.idea/
+.idea
+*.iws
+*.iml
+*.ipr
