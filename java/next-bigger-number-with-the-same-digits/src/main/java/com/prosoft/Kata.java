@@ -1,15 +1,25 @@
 package com.prosoft;
 
+import java.util.ArrayList;
 import java.util.stream.Stream;
 
+import static java.lang.String.valueOf;
 import static java.util.stream.Collectors.joining;
 
 public class Kata {
+
+    /**
+     * Create a function that takes a positive integer and returns the next bigger number that can be formed by rearranging
+     * its digits. For example: 12 ==> 21, 513 ==> 531, 2017 ==> 2071. If the digits can't be rearranged to form a bigger
+     * number, return -1: 9 ==> -1, 111 ==> -1, 531 ==> -1.
+     *
+     * @param n
+     * @return
+     */
     public static long nextBiggerNumber(long n) {
-        char[] charArray = String.valueOf(n).toCharArray();
+        char[] charArray = valueOf(n).toCharArray();
         boolean charArrayHasBeenChanged = false;
         boolean firstNumberWasFound = false;
-        int minVal = 0;
         int indexRight = 0;
         int indexLeft = 0;
         do {
@@ -18,49 +28,49 @@ public class Kata {
             indexLeft = charArray.length - 2;
             while ((indexLeft >= 0) && (!firstNumberWasFound)) {
                 if (Character.getNumericValue(charArray[indexLeft]) < Character.getNumericValue(charArray[indexRight])) {
-                    minVal = Character.getNumericValue(charArray[indexLeft]);
-                    charArray[indexLeft] = charArray[indexRight];
-                    charArray[indexRight] = Character.forDigit(minVal, 10);
+                    swapElements(charArray, indexLeft, indexRight);
                     charArrayHasBeenChanged = true;
                 }
                 if ((charArrayToLong(charArray) > n)) {
                     firstNumberWasFound = true;
-                    // Получили из 10990 результат 19090, но есть ли меньшее?
-                    if ((changeLastTwoDigit(charArrayToLong(charArray)) > n) && (changeLastTwoDigit(charArrayToLong(charArray)) < charArrayToLong(charArray))) {
-                        indexRight = charArray.length - 1;
-                        indexLeft = charArray.length - 2;
-                        minVal = Character.getNumericValue(charArray[indexLeft]);
-                        charArray[indexLeft] = charArray[indexRight];
-                        charArray[indexRight] = Character.forDigit(minVal, 10);
-                    }
+                    charArray = findFirstBigger(n, charArray);
                 }
-                indexRight = indexRight - 1;
-                indexLeft = indexLeft - 1;
+                indexRight--;
+                indexLeft--;
             }
         } while ((charArrayHasBeenChanged) && (!firstNumberWasFound));
-
         return charArrayToLong(charArray) == n ? -1 : charArrayToLong(charArray);
     }
 
-    private static long charArrayToLong(char[] chArr) {
-        return Long.parseLong(Stream.of(chArr)
-                .map(String::valueOf).collect(joining()));
-    }
-
-    // change the last two
-    private static long changeLastTwoDigit(long longVar) {
-        char[] charArray = String.valueOf(longVar).toCharArray();
-        if (charArray.length >= 2) {
-            int minVal = 0;
-            int indexRight = charArray.length - 1;
-            int indexLeft = charArray.length - 2;
-            minVal = Character.getNumericValue(charArray[indexLeft]);
-            charArray[indexLeft] = charArray[indexRight];
-            charArray[indexRight] = Character.forDigit(minVal, 10);
-            return charArrayToLong(charArray);
-        } else {
-            return longVar;
+    private static char[] findFirstBigger(long n, char[] charArray) {
+        ArrayList<Character> characterArrayList = new ArrayList<>();
+        long firstBigNumber = 0;
+        for (firstBigNumber = n + 1; firstBigNumber <= charArrayToLong(charArray); firstBigNumber++) {
+            characterArrayList.clear();
+            for (char c : valueOf(n).toCharArray()) {
+                characterArrayList.add(c);
+            }
+            boolean foundAllDigit = true;
+            for (char c : valueOf(firstBigNumber).toCharArray()) {
+                if (!characterArrayList.remove(Character.valueOf(c))) {
+                    foundAllDigit = false;
+                    break;
+                }
+            }
+            if (foundAllDigit) {
+                break;
+            }
         }
+        return valueOf(firstBigNumber).toCharArray();
     }
 
+    private static void swapElements(char[] charArray, int indexLeft, int indexRight) {
+        int minVal = Character.getNumericValue(charArray[indexLeft]);
+        charArray[indexLeft] = charArray[indexRight];
+        charArray[indexRight] = Character.forDigit(minVal, 10);
+    }
+
+    private static long charArrayToLong(char[] chArr) {
+        return Long.parseLong(Stream.of(chArr).map(String::valueOf).collect(joining()));
+    }
 }
