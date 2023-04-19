@@ -12,6 +12,7 @@
 
     <modules>
         <module>split-strings</module>
+        <module>next-bigger-number-with-the-same-digits</module>
     </modules>
 
 </project>
