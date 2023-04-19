@@ -2,7 +2,7 @@
 
 # Codewars
 4 kyu
- https://www.codewars.com/kata/55983863da40caa2c900004e/train/java
+Sum Strings as Numbers https://www.codewars.com/kata/5324945e2ece5e1f32000370/train/java
 
 ### References
 1. JUnit Jupiter API https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
