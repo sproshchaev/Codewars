@@ -26,4 +26,17 @@ class KataTest {
         assertEquals("123469113", Kata.sumStrings("123456768", "12345"));
     }
 
+    @Test
+    @DisplayName("sumStrings('76763460563626','0384733186125574835621740') => '384733186202338296185366'")
+    void sumStringsExecutedSuccess4() {
+        assertEquals("384733186202338296185366", Kata.sumStrings("76763460563626", "0384733186125574835621740"));
+    }
+
+    @Test
+    @DisplayName("sumStrings('00103','08567') => '8670'")
+    void sumStringsExecutedSuccess5() {
+        assertEquals("8670", Kata.sumStrings("00103", "08567"));
+    }
+
+
 }
