@@ -15,6 +15,7 @@
         <module>next-bigger-number-with-the-same-digits</module>
         <module>sum-strings-as-numbers</module>
         <module>adding-big-numbers</module>
+        <module>find-the-nth-reverse-number</module>
     </modules>
 
 </project>
