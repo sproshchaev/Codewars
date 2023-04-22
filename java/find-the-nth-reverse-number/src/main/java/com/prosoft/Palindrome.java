@@ -20,19 +20,18 @@ public class Palindrome {
      * @return
      */
     public static BigInteger findReverseNumber(long n) {
-        long counterReverseNumbers = 1;
+        long counterReverseNumbers = 0; // 1;
+        System.out.println("Start for " + n);
         //
         boolean stop = false;
         char[] charArray = new char[1];
-
-        System.out.println("Старт:");
-
         // от [0] до [9] => [i]
         while (!stop) {
-            charArray[0] = (char) ((counterReverseNumbers - 1) + '0');
-            System.out.println(counterReverseNumbers + "=" + Arrays.toString(charArray));
-            counterReverseNumbers++;
-            if ((counterReverseNumbers == n) || (counterReverseNumbers > 10)) {
+            if ((counterReverseNumbers < n) && (counterReverseNumbers < 10)) {
+                counterReverseNumbers++;
+                charArray[0] = (char) ((counterReverseNumbers - 1) + '0');
+                System.out.println(counterReverseNumbers + "=" + Arrays.toString(charArray));
+            } else {
                 stop = true;
             }
         }
@@ -40,72 +39,67 @@ public class Palindrome {
         // от [1, 1] до [9, 9]
         if (counterReverseNumbers < n) {
             stop = false;
-        }
-        charArray = new char[2];
-        int num = 0;
-        while (!stop) {
-            num = num + 11;
-            charArray = String.valueOf(num).toCharArray();
-            System.out.println(counterReverseNumbers + "=" + Arrays.toString(charArray));
-            counterReverseNumbers++;
-            if ((counterReverseNumbers == n) || (counterReverseNumbers > 19)) {
-                stop = true;
+            charArray = new char[2];
+            int num = 0;
+            while (!stop) {
+                if ((counterReverseNumbers < n) && (counterReverseNumbers < 19)) {
+                    num = num + 11;
+                    counterReverseNumbers++;
+                    charArray = String.valueOf(num).toCharArray();
+                    System.out.println(counterReverseNumbers + "=" + Arrays.toString(charArray));
+                } else {
+                    stop = true;
+                }
             }
         }
 
         // далее свыше [1, 0, 1] => [i, j, i]
         if (counterReverseNumbers < n) {
             stop = false;
-        }
-        int i = 1;
-        int j = 0;
-        int lengthVar = 3;
-        counterReverseNumbers = 19;
-        while (!stop) {
-
-            // ---- for i -----
+            int i = 1;
+            int j = 0;
+            int lengthVar = 3;
+            counterReverseNumbers = 19;
             while (!stop) {
+                // ---- for i -----
+                while (!stop) {
+                    charArray = new char[lengthVar];
+                    if (i > 9) {
+                        i = 1;
+                    }
+                    charArray[0] = (char) (i + '0');
+                    charArray[lengthVar - 1] = (char) (i + '0');
+                    // ---- for j -----
+                    while ((!stop) && (i < 10)) {
 
-                charArray = new char[lengthVar];
+                        for (int k = 1; k <= lengthVar - 2; k++) {
+                            charArray[k] = (char) (j + '0');
+                        }
+                        counterReverseNumbers++;
+                        System.out.println(counterReverseNumbers + "=" + Arrays.toString(charArray));
 
-                if (i > 9) {
-                    i = 1;
+                        if (counterReverseNumbers == n) {
+                            stop = true;
+                        }
+
+                        j++;
+
+                        if ((j > 9) && (!stop)) {
+                            j = 0;
+                            i++;
+                            charArray[0] = (char) (i + '0');
+                            charArray[lengthVar - 1] = (char) (i + '0');
+                        }
+
+                    }
+                    // ---- for j -----
+                    //i++;
+                    lengthVar++;
                 }
+                // ---- for i -----
 
-                charArray[0] = (char) (i + '0');
-                charArray[lengthVar - 1] = (char) (i + '0');
-
-                // ---- for j -----
-                while ((!stop) && (i < 10)) {
-
-                    for (int k = 1; k <= lengthVar - 2; k++) {
-                        charArray[k] = (char) (j + '0');
-                    }
-                    counterReverseNumbers++;
-                    System.out.println(counterReverseNumbers + "=" + Arrays.toString(charArray));
-
-                    if (counterReverseNumbers == n) {
-                        stop = true;
-                    }
-
-                    j++;
-
-                    if ((j > 9) && (!stop)) {
-                        j = 0;
-                        i++;
-                        charArray[0] = (char) (i + '0');
-                        charArray[lengthVar - 1] = (char) (i + '0');
-                    }
-
-                }
-                // ---- for j -----
-                //i++;
-                lengthVar++;
             }
-            // ---- for i -----
-
         }
-
         return new BigInteger(new String(charArray));
     }
 
