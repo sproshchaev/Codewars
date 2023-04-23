@@ -69,14 +69,29 @@ public class Palindrome {
                     }
                     charArray[0] = (char) (i + '0');
                     charArray[lengthVar - 1] = (char) (i + '0');
+
                     // ---- for j -----
                     while ((!stop) && (i < 10)) {
 
-                        for (int k = 1; k <= lengthVar - 2; k++) {
-                            charArray[k] = (char) (j + '0');
+                        // [1, 2, 0, 2, 1]
+                        // [1, 2, 1, 2, 1]
+                        // [1, 2, 2, 2, 1] V lengthVar = 5, j = 2,
+                        //
+                        // ...
+                        // [1, 3, 0, 0, 3, 1]
+                        // [1, 3, 1, 1, 3, 1]
+                        // [1, 3, 2, 2, 3, 1]
+                        // [1, 3, 3, 3, 3, 1] V lengthVar = 6, j = 3,
+
+                        for (int l = 0; l <= j; l++) {
+
+                            for (int k = 1; k <= lengthVar - 2; k++) {
+                                charArray[k] = (char) (j + '0');
+                            }
+                            counterReverseNumbers++;
+                            System.out.println(counterReverseNumbers + "=" + Arrays.toString(charArray));
                         }
-                        counterReverseNumbers++;
-                        System.out.println(counterReverseNumbers + "=" + Arrays.toString(charArray));
+
 
                         if (counterReverseNumbers == n) {
                             stop = true;
