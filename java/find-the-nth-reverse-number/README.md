@@ -12,6 +12,14 @@ DESCRIPTION:
         You need to return the nth reverse number. (Assume that reverse numbers start from 0 as shown in the example.)
     NOTES:
         1 < n <= 100000000000
+    
+    Пример ряда:
+        #1   #2   #3   #4   #5   #6   #7   #8   #9  #10
+L=1      0    1    2    3    4    5    6    7    8    9
+L=2      -   11   22   33   44   55   66   77   88   99
+L=3    101  111  121  131  141  151  161  171  181  191
+L=4   1001 1111 1221 1331 1441 1551 1661 1771 1881 1991
+        
 ```
 ### Solution
 
