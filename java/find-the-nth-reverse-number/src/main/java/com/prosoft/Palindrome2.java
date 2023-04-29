@@ -23,35 +23,63 @@ public class Palindrome2 {
 
             //---- Формируем итерацию ----
             counterReverseNumbers++;
+            numInLine++;
             if ((reverseNumber.equals(BigInteger.valueOf(-1))) || (reverseNumber.toString().length() % 2 != 0)) {
 
                 //--- Проверяем позицию в строке от 1 до 10, после чего переход на новую
                 if (numInLine > 10) {
-                    reverseNumber = reverseNumber.add(BigInteger.valueOf(deltaForNewLine));
-                    numInLine = 0;
+
+                    // --- Проверка - если после прибавления дельты увеличится длина числа, то прибавляем не переход, а +2
+                    if (reverseNumber.add(BigInteger.valueOf(deltaForNewLine)).toString().length() > lengthReverseNumber) {
+                        reverseNumber = reverseNumber.add(BigInteger.valueOf(2)); // при увеличении длинны +2
+                    } else {
+                        reverseNumber = reverseNumber.add(BigInteger.valueOf(deltaForNewLine));
+                    }
+
+                    if (reverseNumber.equals(BigInteger.valueOf(11))) {
+                        numInLine = 2;
+                    } else {
+                        numInLine = 1;
+                    }
+
                 } else {
-                    // нечетное 1, 3, ...
+                    // нечетное L=1, 3, ...
                     reverseNumber = reverseNumber.add(BigInteger.valueOf(multiplierOddLength));
                 }
             } else {
+
                 //--- Проверяем позицию в строке от 1 до 10, после чего переход на новую
                 if (numInLine > 10) {
-                    reverseNumber = reverseNumber.add(BigInteger.valueOf(deltaForNewLine));
-                    numInLine = 0;
+                    //reverseNumber = reverseNumber.add(BigInteger.valueOf(deltaForNewLine));
+                    // --- Проверка - если после прибавления дельты увеличится длина числа, то прибавляем не переход, а +2
+                    if (reverseNumber.add(BigInteger.valueOf(deltaForNewLine)).toString().length() > lengthReverseNumber) {
+                        reverseNumber = reverseNumber.add(BigInteger.valueOf(2)); // при увеличении длинны +2
+                    } else {
+                        reverseNumber = reverseNumber.add(BigInteger.valueOf(deltaForNewLine));
+                    }
+
+                    numInLine = 1;
                 } else {
-                    // четное 2, 4, ...
+                    // четное L=2, 4, ...
                     reverseNumber = reverseNumber.add(BigInteger.valueOf(multiplierEvenLength));
                 }
             }
-            numInLine++;
+            //numInLine++;
             //---- Формируем итерацию ----
 
             //--- Проверяем - изменилась ли длина lengthReverseNumber
             if (reverseNumber.toString().length() > lengthReverseNumber) {
+                //
                 lengthReverseNumber = reverseNumber.toString().length();
-                // множитель для четной длины, множитель для нечетной длины
-                multiplierOddLength = multiplierOddLength * 10;
-                multiplierEvenLength = multiplierEvenLength * 10;
+                System.out.println("new " + lengthReverseNumber + " " + reverseNumber);
+
+                // множитель для четной длины, множитель для нечетной длины меняем на каждой l=3, 5
+                if (lengthReverseNumber % 2 != 0) {
+                    deltaForNewLine = multiplierEvenLength;
+                    multiplierOddLength = multiplierOddLength * 10;
+                    multiplierEvenLength = multiplierEvenLength * 10;
+
+                }
             }
             //--- Проверяем - изменилась ли длина lengthReverseNumber
 
