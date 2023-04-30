@@ -95,9 +95,18 @@ class Palindrome3Test {
     }
 
     @Test
-    @DisplayName("findReverseNumber(100000000000L) => 900000000000000000009")
+    @DisplayName("findReverseNumber(300) => 20002")
     void findReverseNumberExecutedSuccess15() {
+        assertEquals(BigInteger.valueOf(20002), Palindrome3.findReverseNumber(300));
+    }
+
+
+    @Test
+    @DisplayName("findReverseNumber(100000000000L) => 900000000000000000009")
+    void findReverseNumberExecutedSuccessMax() {
         assertEquals(new BigInteger("900000000000000000009"), Palindrome3.findReverseNumber(100000000000L));
     }
+
+
 
 }
