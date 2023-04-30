@@ -9,15 +9,15 @@ import java.util.List;
 public class Palindrome3 {
     public static BigInteger findReverseNumber(long n) {
         /* lengthReverseNumber=1, counterReverseNumbers=0, reverseNumber=-1, min=0, max=9 */
-        String[] initArray = new String[] {"1", "0", "-1", "0", "9"};
+        String[] initArray = new String[] {"4", "110", "1001", "10", "99"}; // getStartBeginEnv(n);
+        // String[] initArray = new String[]{"1", "0", "-1", "0", "9"};
         // String[] initArray = getStartEnv(n);
-
         // String[] initArray = new String[] {"4", "110", "1001", "10", "99"};
 
         System.out.println("Для n=" + n + " initArray=" + Arrays.toString(initArray));
 
         int lengthReverseNumber = Integer.valueOf(initArray[0]); // 1;
-        long counterReverseNumbers = Long.valueOf(initArray[1]); // - 1; // 0; // Если используем getStartEnv(), то XXX - 1
+        long counterReverseNumbers = Long.valueOf(initArray[1]) - 1; // 0; // Если используем getStartEnv(), то XXX - 1
         BigInteger reverseNumber = new BigInteger(initArray[2]); // BigInteger.valueOf(-1);
         long min = Long.valueOf(initArray[3]); // 0;
         long max = Long.valueOf(initArray[4]); // 9;
@@ -59,9 +59,9 @@ public class Palindrome3 {
                             // del
                             reverseNumber = new BigInteger(String.valueOf(i) + String.valueOf(j) + reverse(i));
 
-                            //---
+                            //--- del
                             if (j == 0) {
-                                System.out.println("length=" + lengthReverseNumber + ": число " + reverseNumber + " его номер=" + counterReverseNumbers + " min=" + min + " max=" + max);
+                                //System.out.println("length=" + lengthReverseNumber + ": число " + reverseNumber + " его номер=" + counterReverseNumbers + " min=" + min + " max=" + max);
                             }
                             //---
 
@@ -105,8 +105,13 @@ public class Palindrome3 {
         return reverseNumber;
     }
 
+    private static String[] getStartBeginEnv(long n) {
+        String[] result = new String[]{"1", "0", "-1", "0", "9"};
+        return result;
+    }
+
     private static String[] getStartEnv(long n) {
-        String[] result = new String[] {"1", "0", "-1", "0", "9"};
+        String[] result = new String[]{"1", "0", "-1", "0", "9"};
         long counterReverseNumbers = 10;
         BigInteger reverseNumber = BigInteger.valueOf(9);
         int lengthReverseNumber = 1;
