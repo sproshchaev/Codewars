@@ -2,22 +2,17 @@ package com.prosoft;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
 public class Palindrome3 {
     public static BigInteger findReverseNumber(long n) {
         /* lengthReverseNumber=1, counterReverseNumbers=0, reverseNumber=-1, min=0, max=9 */
-        String[] initArray = new String[] {"4", "110", "1001", "10", "99"}; // getStartBeginEnv(n);
-        // String[] initArray = new String[]{"1", "0", "-1", "0", "9"};
-        // String[] initArray = getStartEnv(n);
-        // String[] initArray = new String[] {"4", "110", "1001", "10", "99"};
-
-        System.out.println("Для n=" + n + " initArray=" + Arrays.toString(initArray));
-
+        String[] initArray = getStartBeginEnv(n);
+        //System.out.println("Для n=" + n + " initArray=" + Arrays.toString(initArray));
         int lengthReverseNumber = Integer.valueOf(initArray[0]); // 1;
-        long counterReverseNumbers = Long.valueOf(initArray[1]) - 1; // 0; // Если используем getStartEnv(), то XXX - 1
+        long counterReverseNumbers = n > 1 ? Long.valueOf(initArray[1]) -1 : Long.valueOf(initArray[1]); // 0; // Если используем getStartEnv(), то XXX - 1
         BigInteger reverseNumber = new BigInteger(initArray[2]); // BigInteger.valueOf(-1);
         long min = Long.valueOf(initArray[3]); // 0;
         long max = Long.valueOf(initArray[4]); // 9;
@@ -45,7 +40,7 @@ public class Palindrome3 {
                         // 1|1
                         counterReverseNumbers++;
                         // del
-                        reverseNumber = new BigInteger(String.valueOf(i) + reverse(i));
+                        //reverseNumber = new BigInteger(String.valueOf(i) + reverse(i));
                         //---- Проверяем число ----
                         if (n == counterReverseNumbers) {
                             reverseNumber = new BigInteger(String.valueOf(i) + reverse(i));
@@ -57,12 +52,12 @@ public class Palindrome3 {
                         for (int j = 0; j <= 9; j++) {
                             counterReverseNumbers++;
                             // del
-                            reverseNumber = new BigInteger(String.valueOf(i) + String.valueOf(j) + reverse(i));
+                            //reverseNumber = new BigInteger(String.valueOf(i) + String.valueOf(j) + reverse(i));
 
                             //--- del
-                            if (j == 0) {
-                                //System.out.println("length=" + lengthReverseNumber + ": число " + reverseNumber + " его номер=" + counterReverseNumbers + " min=" + min + " max=" + max);
-                            }
+                            //if (j == 0) {
+                            //System.out.println("length=" + lengthReverseNumber + ": число " + reverseNumber + " его номер=" + counterReverseNumbers + " min=" + min + " max=" + max);
+                            //}
                             //---
 
                             //---- Проверяем число ----
@@ -107,6 +102,67 @@ public class Palindrome3 {
 
     private static String[] getStartBeginEnv(long n) {
         String[] result = new String[]{"1", "0", "-1", "0", "9"};
+        int lengthReverseNumber = 0;
+        long counterReverseNumbers = 1;
+        BigInteger reverseNumber = BigInteger.valueOf(0);
+        long min = 0;
+        long max = 9;
+        List<String> stringList = new ArrayList<>();
+        boolean stop = false;
+        while (!stop) {
+
+            //counterReverseNumbers++;
+            lengthReverseNumber++;
+
+            if (lengthReverseNumber % 2 != 0) {
+                if (lengthReverseNumber > 1) {
+                    // нечетное 3, 5, 7 ...
+                    if (lengthReverseNumber == 3) {
+                        counterReverseNumbers = 20;
+                    } else {
+                        counterReverseNumbers = 2 * min * 10;
+                    }
+                }
+            } else {
+                // четное 2, 4, 6 ...
+                if (lengthReverseNumber == 2) {
+                    min = 1;
+                    counterReverseNumbers = 11;
+                    reverseNumber = BigInteger.valueOf(11);
+                } else {
+                    min = min * 10;
+                    max = Long.valueOf(String.join("", Collections.nCopies(lengthReverseNumber / 2, "9")));
+                    counterReverseNumbers = 11 * min;
+                }
+
+            }
+
+            // reverseNumber
+            if (lengthReverseNumber > 2) {
+                // 101
+                reverseNumber = new BigInteger("1" + String.join("", Collections.nCopies(lengthReverseNumber - 2, "0")) + "1");
+            }
+
+            // Проверяем результат
+            if (lengthReverseNumber > 22) {
+                stop = true;
+            } else {
+                //System.out.println("L=" + lengthReverseNumber + " count=" + counterReverseNumbers + " reverseNumber=" + reverseNumber + " min=" + min + " max=" + max);
+                stringList.add(lengthReverseNumber + ";" + counterReverseNumbers + ";" + reverseNumber + ";" + min + ";" + max + ";");
+            }
+
+        }
+
+        //
+        // Теперь перебираем stringList
+        for (int i = stringList.size() - 1; i >= 0; i--) {
+            if (n > Long.valueOf(stringList.get(i).split(";")[1])) {
+                //System.out.println(stringList.get(i));
+                result = stringList.get(i).split(";");
+                break;
+            }
+        }
+
         return result;
     }
 
