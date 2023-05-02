@@ -13,8 +13,36 @@ public class Palindrome {
         long min = Long.valueOf(initArray[3]);
         long max = Long.valueOf(initArray[4]);
         boolean stop = false;
+
+        //boolean setMin = false;
+        long oldMin = 0;
+
         while (!stop) {
+
+          //  setMin = true;
+
+            // Для четных - здесь изменить min
+            if ((lengthReverseNumber % 2 == 0) && ((counterReverseNumbers + max - min + 1) > n)) {
+                System.out.println("lengthReverseNumber=" + lengthReverseNumber);
+                //min = (n - counterReverseNumbers + min);
+                //counterReverseNumbers = counterReverseNumbers + (n - counterReverseNumbers + min);
+            }
+
+            // Для нечетных - здесь изменить min
+            if ((lengthReverseNumber % 2 != 0) && ((counterReverseNumbers + max - min + 1) * 10 > n)) {
+                //System.out.println("lengthReverseNumber=" + lengthReverseNumber);
+                //oldMin = min;
+                //min = min + ((long) Math.floor((n - counterReverseNumbers) / min)) ;//- 1;
+                //counterReverseNumbers = counterReverseNumbers + 10 * ((long) Math.floor((n - counterReverseNumbers) / oldMin));
+                // "findReverseNumber(300) => 20002"
+                // i = 19
+                // count = 299
+            }
+
+            int _delME = 0;
+
             for (long i = min; i <= max; i++) {
+
                 if (lengthReverseNumber == 1) {
                     counterReverseNumbers++;
                     if (n == counterReverseNumbers) {
@@ -26,6 +54,7 @@ public class Palindrome {
                     if (lengthReverseNumber % 2 == 0) {
                         // 1|1
                         counterReverseNumbers++;
+                        //System.out.println("+1 = " + ++_delME);
                         if (n == counterReverseNumbers) {
                             reverseNumber = new BigInteger(i + new StringBuilder(String.valueOf(i)).reverse().toString());
                             stop = true;
@@ -36,6 +65,7 @@ public class Palindrome {
                         if (counterReverseNumbers + 10 > n) {
                             for (int j = 0; j <= 9; j++) {
                                 counterReverseNumbers++;
+                                //System.out.println("+1 = " + ++_delME);
                                 if (n == counterReverseNumbers) {
                                     reverseNumber = new BigInteger(String.valueOf(i) + String.valueOf(j) + new StringBuilder(String.valueOf(i)).reverse().toString());
                                     stop = true;
@@ -44,6 +74,7 @@ public class Palindrome {
                             }
                         } else {
                             counterReverseNumbers = counterReverseNumbers + 10;
+                            //System.out.println("+10 = " + ++_delME);
                         }
                     }
                 }
@@ -54,9 +85,11 @@ public class Palindrome {
             lengthReverseNumber++;
             if (min == 0) {
                 min = 1;
+                //setMin = true;
             } else {
                 if ((lengthReverseNumber % 2 == 0) && (lengthReverseNumber > 3)) {
                     min = min * 10;
+                    //setMin = true;
                 }
             }
             if ((lengthReverseNumber % 2 == 0) && (lengthReverseNumber > 3)) {
