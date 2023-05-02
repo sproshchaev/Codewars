@@ -12,7 +12,7 @@ public class Palindrome3 {
         String[] initArray = getStartBeginEnv(n);
         //System.out.println("Для n=" + n + " initArray=" + Arrays.toString(initArray));
         int lengthReverseNumber = Integer.valueOf(initArray[0]); // 1;
-        long counterReverseNumbers = n > 1 ? Long.valueOf(initArray[1]) -1 : Long.valueOf(initArray[1]); // 0; // Если используем getStartEnv(), то XXX - 1
+        long counterReverseNumbers = n > 1 ? Long.valueOf(initArray[1]) - 1 : Long.valueOf(initArray[1]); // 0; // Если используем getStartEnv(), то XXX - 1
         BigInteger reverseNumber = new BigInteger(initArray[2]); // BigInteger.valueOf(-1);
         long min = Long.valueOf(initArray[3]); // 0;
         long max = Long.valueOf(initArray[4]); // 9;
@@ -26,8 +26,6 @@ public class Palindrome3 {
 
                 if (lengthReverseNumber == 1) {
                     counterReverseNumbers++;
-                    // del
-                    reverseNumber = new BigInteger(String.valueOf(i));
                     //---- Проверяем число ----
                     if (n == counterReverseNumbers) {
                         reverseNumber = new BigInteger(String.valueOf(i));
@@ -39,8 +37,6 @@ public class Palindrome3 {
                     if (lengthReverseNumber % 2 == 0) {
                         // 1|1
                         counterReverseNumbers++;
-                        // del
-                        //reverseNumber = new BigInteger(String.valueOf(i) + reverse(i));
                         //---- Проверяем число ----
                         if (n == counterReverseNumbers) {
                             reverseNumber = new BigInteger(String.valueOf(i) + reverse(i));
@@ -49,23 +45,19 @@ public class Palindrome3 {
                         }
                     } else {
                         // 1|0|1
-                        for (int j = 0; j <= 9; j++) {
-                            counterReverseNumbers++;
-                            // del
-                            //reverseNumber = new BigInteger(String.valueOf(i) + String.valueOf(j) + reverse(i));
-
-                            //--- del
-                            //if (j == 0) {
-                            //System.out.println("length=" + lengthReverseNumber + ": число " + reverseNumber + " его номер=" + counterReverseNumbers + " min=" + min + " max=" + max);
-                            //}
-                            //---
-
-                            //---- Проверяем число ----
-                            if (n == counterReverseNumbers) {
-                                reverseNumber = new BigInteger(String.valueOf(i) + String.valueOf(j) + reverse(i));
-                                stop = true;
-                                break;
+                        // Проверяем - если counterReverseNumbers + 10 < n
+                        if (counterReverseNumbers + 10 > n) {
+                            for (int j = 0; j <= 9; j++) {
+                                counterReverseNumbers++;
+                                //---- Проверяем число ----
+                                if (n == counterReverseNumbers) {
+                                    reverseNumber = new BigInteger(String.valueOf(i) + String.valueOf(j) + reverse(i));
+                                    stop = true;
+                                    break;
+                                }
                             }
+                        } else {
+                            counterReverseNumbers = counterReverseNumbers + 10;
                         }
                     }
 
@@ -80,7 +72,6 @@ public class Palindrome3 {
 
             //System.out.println("length=" + lengthReverseNumber + ": число " + reverseNumber + " его номер=" + counterReverseNumbers + " min=" + min + " max=" + max);
 
-
             // Увеличиваем
             if (min == 0) {
                 min = 1;
@@ -93,7 +84,6 @@ public class Palindrome3 {
             if ((lengthReverseNumber % 2 == 0) && (lengthReverseNumber > 3)) {
                 max = Long.valueOf(String.valueOf(max) + "9");
             }
-
 
         }
 

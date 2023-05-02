@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Methods testing the Palindrome3 class")
 class Palindrome3Test {
@@ -101,10 +101,29 @@ class Palindrome3Test {
     }
 
     @Test
+    @DisplayName("findReverseNumber(31680178650) => 216801786505687108612")
+    void findReverseNumberExecutedSuccess16_Attempt() {
+        assertEquals(new BigInteger("216801786505687108612"), Palindrome3.findReverseNumber(31680178650L));
+    }
+
+    @Test
+    @DisplayName("findReverseNumber(87824081010) => 778240810101018042877")
+    void findReverseNumberExecutedSuccess17_Attempt() {
+        assertEquals(new BigInteger("778240810101018042877"), Palindrome3.findReverseNumber(87824081010L));
+    }
+
+    @Test
+    @DisplayName("findReverseNumber(39467644060) => 294676440606044676492")
+    void findReverseNumberExecutedSuccess18_Attempt() {
+        assertEquals(new BigInteger("294676440606044676492"), Palindrome3.findReverseNumber(39467644060L));
+    }
+
+    @Test
     @DisplayName("findReverseNumber(100000000000L) => 900000000000000000009")
     void findReverseNumberExecutedSuccessMax() {
         assertEquals(new BigInteger("900000000000000000009"), Palindrome3.findReverseNumber(100000000000L));
     }
+
 
 
 
