@@ -1,212 +1,97 @@
 package com.prosoft;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 
 public class Palindrome3 {
     public static BigInteger findReverseNumber(long n) {
-        /* lengthReverseNumber=1, counterReverseNumbers=0, reverseNumber=-1, min=0, max=9 */
-        String[] initArray = getStartBeginEnv(n);
-        //System.out.println("Для n=" + n + " initArray=" + Arrays.toString(initArray));
-        int lengthReverseNumber = Integer.valueOf(initArray[0]); // 1;
-        long counterReverseNumbers = n > 1 ? Long.valueOf(initArray[1]) - 1 : Long.valueOf(initArray[1]); // 0; // Если используем getStartEnv(), то XXX - 1
-        BigInteger reverseNumber = new BigInteger(initArray[2]); // BigInteger.valueOf(-1);
-        long min = Long.valueOf(initArray[3]); // 0;
-        long max = Long.valueOf(initArray[4]); // 9;
+        long counterReverseNumbers = 0;
+        BigInteger reverseNumber = BigInteger.valueOf(-1);
+        int lengthReverseNumber = 1;
 
+        // множитель для четной длины, множитель для нечетной длины
+        long multiplierOddLength = 1;
+        long multiplierEvenLength = 11;
+
+        // дельта при переходе на новую строку
+        long deltaForNewLine = 2;
+
+        // число в строке
+        int numInLine = 0;
         boolean stop = false;
-
         // Прибавить шаг, если изменяется длина, то переназначить переменные
         while (!stop) {
 
-            for (long i = min; i <= max; i++) {
+            //---- Формируем итерацию ----
+            counterReverseNumbers++;
+            numInLine++;
+            if ((reverseNumber.equals(BigInteger.valueOf(-1))) || (reverseNumber.toString().length() % 2 != 0)) {
 
-                if (lengthReverseNumber == 1) {
-                    counterReverseNumbers++;
-                    //---- Проверяем число ----
-                    if (n == counterReverseNumbers) {
-                        reverseNumber = new BigInteger(String.valueOf(i));
-                        stop = true;
-                        break;
-                    }
-                } else {
+                //--- Проверяем позицию в строке от 1 до 10, после чего переход на новую
+                if (numInLine > 10) {
 
-                    if (lengthReverseNumber % 2 == 0) {
-                        // 1|1
-                        counterReverseNumbers++;
-                        //---- Проверяем число ----
-                        if (n == counterReverseNumbers) {
-                            reverseNumber = new BigInteger(String.valueOf(i) + reverse(i));
-                            stop = true;
-                            break;
-                        }
+                    // --- Проверка - если после прибавления дельты увеличится длина числа, то прибавляем не переход, а +2
+                    if (reverseNumber.add(BigInteger.valueOf(deltaForNewLine)).toString().length() > lengthReverseNumber) {
+                        reverseNumber = reverseNumber.add(BigInteger.valueOf(2)); // при увеличении длинны +2
                     } else {
-                        // 1|0|1
-                        // Проверяем - если counterReverseNumbers + 10 < n
-                        if (counterReverseNumbers + 10 > n) {
-                            for (int j = 0; j <= 9; j++) {
-                                counterReverseNumbers++;
-                                //---- Проверяем число ----
-                                if (n == counterReverseNumbers) {
-                                    reverseNumber = new BigInteger(String.valueOf(i) + String.valueOf(j) + reverse(i));
-                                    stop = true;
-                                    break;
-                                }
-                            }
-                        } else {
-                            counterReverseNumbers = counterReverseNumbers + 10;
-                        }
+                        reverseNumber = reverseNumber.add(BigInteger.valueOf(deltaForNewLine));
                     }
 
+                    if (reverseNumber.equals(BigInteger.valueOf(11))) {
+                        numInLine = 2;
+                    } else {
+                        numInLine = 1;
+                    }
+
+                } else {
+                    // нечетное L=1, 3, ...
+                    reverseNumber = reverseNumber.add(BigInteger.valueOf(multiplierOddLength));
                 }
-                if (stop) {
-                    break;
-                }
-            }
-
-
-            lengthReverseNumber++;
-
-            //System.out.println("length=" + lengthReverseNumber + ": число " + reverseNumber + " его номер=" + counterReverseNumbers + " min=" + min + " max=" + max);
-
-            // Увеличиваем
-            if (min == 0) {
-                min = 1;
             } else {
-                if ((lengthReverseNumber % 2 == 0) && (lengthReverseNumber > 3)) {
-                    min = min * 10;
+
+                //--- Проверяем позицию в строке от 1 до 10, после чего переход на новую
+                if (numInLine > 10) {
+                    //reverseNumber = reverseNumber.add(BigInteger.valueOf(deltaForNewLine));
+                    // --- Проверка - если после прибавления дельты увеличится длина числа, то прибавляем не переход, а +2
+                    if (reverseNumber.add(BigInteger.valueOf(deltaForNewLine)).toString().length() > lengthReverseNumber) {
+                        reverseNumber = reverseNumber.add(BigInteger.valueOf(2)); // при увеличении длинны +2
+                    } else {
+                        reverseNumber = reverseNumber.add(BigInteger.valueOf(deltaForNewLine));
+                    }
+
+                    numInLine = 1;
+                } else {
+                    // четное L=2, 4, ...
+                    reverseNumber = reverseNumber.add(BigInteger.valueOf(multiplierEvenLength));
                 }
             }
+            //numInLine++;
+            //---- Формируем итерацию ----
 
-            if ((lengthReverseNumber % 2 == 0) && (lengthReverseNumber > 3)) {
-                max = Long.valueOf(String.valueOf(max) + "9");
+            //--- Проверяем - изменилась ли длина lengthReverseNumber
+            if (reverseNumber.toString().length() > lengthReverseNumber) {
+                //
+                lengthReverseNumber = reverseNumber.toString().length();
+                System.out.println("new " + lengthReverseNumber + " " + reverseNumber);
+
+                // множитель для четной длины, множитель для нечетной длины меняем на каждой l=3, 5
+                if (lengthReverseNumber % 2 != 0) {
+                    deltaForNewLine = multiplierEvenLength;
+                    multiplierOddLength = multiplierOddLength * 10;
+                    multiplierEvenLength = multiplierEvenLength * 10;
+
+                }
             }
+            //--- Проверяем - изменилась ли длина lengthReverseNumber
+
+            //---- Проверяем число ----
+            if (n == counterReverseNumbers) {
+                stop = true;
+            }
+            //---- Проверяем число ----
 
         }
 
         return reverseNumber;
-    }
-
-    private static String[] getStartBeginEnv(long n) {
-        String[] result = new String[]{"1", "0", "-1", "0", "9"};
-        int lengthReverseNumber = 0;
-        long counterReverseNumbers = 1;
-        BigInteger reverseNumber = BigInteger.valueOf(0);
-        long min = 0;
-        long max = 9;
-        List<String> stringList = new ArrayList<>();
-        boolean stop = false;
-        while (!stop) {
-
-            //counterReverseNumbers++;
-            lengthReverseNumber++;
-
-            if (lengthReverseNumber % 2 != 0) {
-                if (lengthReverseNumber > 1) {
-                    // нечетное 3, 5, 7 ...
-                    if (lengthReverseNumber == 3) {
-                        counterReverseNumbers = 20;
-                    } else {
-                        counterReverseNumbers = 2 * min * 10;
-                    }
-                }
-            } else {
-                // четное 2, 4, 6 ...
-                if (lengthReverseNumber == 2) {
-                    min = 1;
-                    counterReverseNumbers = 11;
-                    reverseNumber = BigInteger.valueOf(11);
-                } else {
-                    min = min * 10;
-                    max = Long.valueOf(String.join("", Collections.nCopies(lengthReverseNumber / 2, "9")));
-                    counterReverseNumbers = 11 * min;
-                }
-
-            }
-
-            // reverseNumber
-            if (lengthReverseNumber > 2) {
-                // 101
-                reverseNumber = new BigInteger("1" + String.join("", Collections.nCopies(lengthReverseNumber - 2, "0")) + "1");
-            }
-
-            // Проверяем результат
-            if (lengthReverseNumber > 22) {
-                stop = true;
-            } else {
-                //System.out.println("L=" + lengthReverseNumber + " count=" + counterReverseNumbers + " reverseNumber=" + reverseNumber + " min=" + min + " max=" + max);
-                stringList.add(lengthReverseNumber + ";" + counterReverseNumbers + ";" + reverseNumber + ";" + min + ";" + max + ";");
-            }
-
-        }
-
-        //
-        // Теперь перебираем stringList
-        for (int i = stringList.size() - 1; i >= 0; i--) {
-            if (n > Long.valueOf(stringList.get(i).split(";")[1])) {
-                //System.out.println(stringList.get(i));
-                result = stringList.get(i).split(";");
-                break;
-            }
-        }
-
-        return result;
-    }
-
-    private static String[] getStartEnv(long n) {
-        String[] result = new String[]{"1", "0", "-1", "0", "9"};
-        long counterReverseNumbers = 10;
-        BigInteger reverseNumber = BigInteger.valueOf(9);
-        int lengthReverseNumber = 1;
-        long min = 1;
-        long max = 9;
-        long deltaForCount = 9;
-        boolean stop = false;
-        List<String> stringList = new ArrayList<>();
-
-        while (!stop) {
-
-            lengthReverseNumber++;
-
-            if (lengthReverseNumber % 2 != 0) {
-                deltaForCount = deltaForCount * 10;
-            }
-
-            counterReverseNumbers = counterReverseNumbers + deltaForCount;
-
-            reverseNumber = new BigInteger(String.valueOf(reverseNumber) + "9");
-
-            if ((lengthReverseNumber % 2 == 0) && (lengthReverseNumber > 2)) {
-                min = min * 10;
-                max = Long.valueOf(String.valueOf(max) + "9");
-            }
-
-            if (lengthReverseNumber > 21) {
-                stop = true;
-            } else {
-                //System.out.println("L=" + lengthReverseNumber + " count=" + counterReverseNumbers + " reverseNumber=" + reverseNumber + " min=" + min + " max=" + max);
-                stringList.add(lengthReverseNumber + ";" + counterReverseNumbers + ";" + reverseNumber + ";" + min + ";" + max + ";");
-            }
-
-        }
-
-        // Теперь перебираем stringList
-        for (int i = stringList.size() - 1; i >= 0; i--) {
-            if (n > Long.valueOf(stringList.get(i).split(";")[1])) {
-                //System.out.println(stringList.get(i));
-                result = stringList.get(i).split(";");
-                break;
-            }
-        }
-
-        return result;
-    }
-
-    private static String reverse(long i) {
-        return new StringBuilder(String.valueOf(i)).reverse().toString();
     }
 
 

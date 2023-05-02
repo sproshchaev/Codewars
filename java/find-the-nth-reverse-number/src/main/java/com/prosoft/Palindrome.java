@@ -1,133 +1,123 @@
 package com.prosoft;
 
 import java.math.BigInteger;
-import java.util.Arrays;
+import java.util.Collections;
+
 
 public class Palindrome {
-    /**
-     * Reverse Number is a number which is the same when reversed.
-     * For example, the first 20 Reverse Numbers are:
-     * 0,    1,    2,    3,    4,    5,    6,    7,    8,    9,  <-X,               дельта=1
-     * 00,   11,   22,   33,   44,   55,   66,   77,   88,   99, <-Z,               дельта=11
-     * 1X1,  2X2,  3X3,  4X4,  5X5,  6X6,  7X7,  8X8,  9X9,  9X9                    дельта=10
-     * 1ZZ1, 1ZZ1, 1ZZ1, 1ZZ1, 1ZZ1, 1ZZ1, 1ZZ1, 1ZZ1, 1ZZ1, 1ZZ1, 2ZZ2, .., 9ZZ9,  дельта=110
-     * 10001, 11X11, 12X21 ...                                                      дельта=1010
-     * <p>
-     * TASK: You need to return the nth reverse number. (Assume that reverse numbers start from 0 as shown in the example)
-     * NOTES: 1 < n <= 100000000000
-     *
-     * @param n
-     * @return
-     */
     public static BigInteger findReverseNumber(long n) {
-        long counterReverseNumbers = 0; // 1;
-        System.out.println("Start for " + n);
-        //
+        String[] initArray = getStartBeginEnv(n);
+        int lengthReverseNumber = Integer.valueOf(initArray[0]);
+        long counterReverseNumbers = n > 1 ? Long.valueOf(initArray[1]) - 1 : Long.valueOf(initArray[1]);
+        BigInteger reverseNumber = new BigInteger(initArray[2]);
+        long min = Long.valueOf(initArray[3]);
+        long max = Long.valueOf(initArray[4]);
         boolean stop = false;
-        char[] charArray = new char[1];
-        // от [0] до [9] => [i]
         while (!stop) {
-            if ((counterReverseNumbers < n) && (counterReverseNumbers < 10)) {
-                counterReverseNumbers++;
-                charArray[0] = (char) ((counterReverseNumbers - 1) + '0');
-                System.out.println(counterReverseNumbers + "=" + Arrays.toString(charArray));
-            } else {
-                stop = true;
-            }
-        }
-
-        // от [1, 1] до [9, 9]
-        if (counterReverseNumbers < n) {
-            stop = false;
-            charArray = new char[2];
-            int num = 0;
-            while (!stop) {
-                if ((counterReverseNumbers < n) && (counterReverseNumbers < 19)) {
-                    num = num + 11;
+            for (long i = min; i <= max; i++) {
+                if (lengthReverseNumber == 1) {
                     counterReverseNumbers++;
-                    charArray = String.valueOf(num).toCharArray();
-                    System.out.println(counterReverseNumbers + "=" + Arrays.toString(charArray));
+                    if (n == counterReverseNumbers) {
+                        reverseNumber = new BigInteger(String.valueOf(i));
+                        stop = true;
+                        break;
+                    }
                 } else {
-                    stop = true;
-                }
-            }
-        }
-
-        // далее свыше [1, 0, 1] => [i, j, i]
-        if (counterReverseNumbers < n) {
-            stop = false;
-            int i = 1;
-            int j = 0;
-            int lengthVar = 3;
-            counterReverseNumbers = 19;
-            while (!stop) {
-                // ---- for i -----
-                while (!stop) {
-                    charArray = new char[lengthVar];
-                    if (i > 9) {
-                        i = 1;
-                    }
-                    charArray[0] = (char) (i + '0');
-                    charArray[lengthVar - 1] = (char) (i + '0');
-
-                    // ---- for j -----
-                    while ((!stop) && (i < 10)) {
-
-                        // [1, 2, 0, 2, 1]
-                        // [1, 2, 1, 2, 1]
-                        // [1, 2, 2, 2, 1] V lengthVar = 5, j = 2,
-                        //
-                        // ...
-                        // [1, 3, 0, 0, 3, 1]
-                        // [1, 3, 1, 1, 3, 1]
-                        // [1, 3, 2, 2, 3, 1]
-                        // [1, 3, 3, 3, 3, 1] V lengthVar = 6, j = 3,
-                        // ...
-                        // [1, 2, 2, 2, 2, 2, 1] (382)
-                        // [1, 3, 0, 0, 0, 3, 1]
-                        // [1, 3, 1, 0, 1, 3, 1]
-                        // [1, 3, 1, 1, 1, 3, 1]
-                        // [1, 3, 1, 2, 1, 3, 1]
-                        // [1, 3, 2, 0, 2, 3, 1]
-                        // [1, 3, 2, 1, 2, 3, 1]
-                        // [1, 3, 2, 2, 2, 3, 1]
-                        // [1, 3, 2, 3, 2, 3, 1]
-                        // [1, 3, 3, 3, 3, 3, 1] (383) V
-
-                        //for (int l = 0; l <= j; l++) {
-
-                            for (int k = 1; k <= lengthVar - 2; k++) {
-                                charArray[k] = (char) (j + '0');
-                            }
-                            counterReverseNumbers++;
-                            System.out.println(counterReverseNumbers + "=" + Arrays.toString(charArray));
-                        //}
-
-
-                        if (counterReverseNumbers == n) {
+                    if (lengthReverseNumber % 2 == 0) {
+                        // 1|1
+                        counterReverseNumbers++;
+                        if (n == counterReverseNumbers) {
+                            reverseNumber = new BigInteger(i + new StringBuilder(String.valueOf(i)).reverse().toString());
                             stop = true;
+                            break;
                         }
-
-                        j++;
-
-                        if ((j > 9) && (!stop)) {
-                            j = 0;
-                            i++;
-                            charArray[0] = (char) (i + '0');
-                            charArray[lengthVar - 1] = (char) (i + '0');
+                    } else {
+                        // 1|0|1 Проверяем - если counterReverseNumbers + 10 < n то цикл пропускаем
+                        if (counterReverseNumbers + 10 > n) {
+                            for (int j = 0; j <= 9; j++) {
+                                counterReverseNumbers++;
+                                if (n == counterReverseNumbers) {
+                                    reverseNumber = new BigInteger(String.valueOf(i) + String.valueOf(j) + new StringBuilder(String.valueOf(i)).reverse().toString());
+                                    stop = true;
+                                    break;
+                                }
+                            }
+                        } else {
+                            counterReverseNumbers = counterReverseNumbers + 10;
                         }
-
                     }
-                    // ---- for j -----
-                    //i++;
-                    lengthVar++;
                 }
-                // ---- for i -----
-
+                if (stop) {
+                    break;
+                }
+            }
+            lengthReverseNumber++;
+            if (min == 0) {
+                min = 1;
+            } else {
+                if ((lengthReverseNumber % 2 == 0) && (lengthReverseNumber > 3)) {
+                    min = min * 10;
+                }
+            }
+            if ((lengthReverseNumber % 2 == 0) && (lengthReverseNumber > 3)) {
+                max = Long.valueOf(String.valueOf(max) + "9");
             }
         }
-        return new BigInteger(new String(charArray));
+        return reverseNumber;
     }
 
-
+    /**
+     * Метод getStartBeginEnv формирует начальные переменные окружения для n
+     *
+     * @param n
+     * @return [lengthReverseNumber (1), counterReverseNumbers (0), reverseNumber (-1), min (0), max (9)]
+     */
+    private static String[] getStartBeginEnv(long n) {
+        String[] result = new String[]{"1", "0", "-1", "0", "9"};
+        int lengthReverseNumber = 0;
+        long counterReverseNumbers = 1;
+        BigInteger reverseNumber = BigInteger.valueOf(0);
+        long min = 0;
+        long max = 9;
+        String[] stringArray = new String[22];
+        int index = 0;
+        boolean stop = false;
+        while (!stop) {
+            lengthReverseNumber++;
+            if (lengthReverseNumber % 2 != 0) {
+                if (lengthReverseNumber > 1) {
+                    if (lengthReverseNumber == 3) {
+                        counterReverseNumbers = 20;
+                    } else {
+                        counterReverseNumbers = 2 * min * 10;
+                    }
+                }
+            } else {
+                if (lengthReverseNumber == 2) {
+                    min = 1;
+                    counterReverseNumbers = 11;
+                    reverseNumber = BigInteger.valueOf(11);
+                } else {
+                    min = min * 10;
+                    max = Long.valueOf(String.join("", Collections.nCopies(lengthReverseNumber / 2, "9")));
+                    counterReverseNumbers = 11 * min;
+                }
+            }
+            if (lengthReverseNumber > 2) {
+                reverseNumber = new BigInteger("1" + String.join("", Collections.nCopies(lengthReverseNumber - 2, "0")) + "1");
+            }
+            if (lengthReverseNumber > 22) {
+                stop = true;
+            } else {
+                stringArray[index++] = lengthReverseNumber + ";" + counterReverseNumbers + ";" + reverseNumber + ";" + min + ";" + max + ";";
+            }
+        }
+        for (int i = stringArray.length - 1; i >= 0; i--) {
+            if (n > Long.valueOf(stringArray[i].split(";")[1])) {
+                result = stringArray[i].split(";");
+                break;
+            }
+        }
+        return result;
+    }
 }
