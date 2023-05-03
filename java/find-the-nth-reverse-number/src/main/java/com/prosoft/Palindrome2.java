@@ -1,12 +1,12 @@
 package com.prosoft;
 
 import java.math.BigInteger;
-import java.util.Arrays;
 
 /**
- * Решение 1
+ * Palindrome2. Решение №1: тесты проходят, но долгое выполнение по времени на больших числах
  */
 public class Palindrome2 {
+
     /**
      * Reverse Number is a number which is the same when reversed.
      * For example, the first 20 Reverse Numbers are:
@@ -23,23 +23,17 @@ public class Palindrome2 {
      * @return
      */
     public static BigInteger findReverseNumber(long n) {
-        long counterReverseNumbers = 0; // 1;
-        System.out.println("Start for " + n);
-        //
+        long counterReverseNumbers = 0;
         boolean stop = false;
         char[] charArray = new char[1];
-        // от [0] до [9] => [i]
         while (!stop) {
             if ((counterReverseNumbers < n) && (counterReverseNumbers < 10)) {
                 counterReverseNumbers++;
                 charArray[0] = (char) ((counterReverseNumbers - 1) + '0');
-                System.out.println(counterReverseNumbers + "=" + Arrays.toString(charArray));
             } else {
                 stop = true;
             }
         }
-
-        // от [1, 1] до [9, 9]
         if (counterReverseNumbers < n) {
             stop = false;
             charArray = new char[2];
@@ -49,14 +43,11 @@ public class Palindrome2 {
                     num = num + 11;
                     counterReverseNumbers++;
                     charArray = String.valueOf(num).toCharArray();
-                    System.out.println(counterReverseNumbers + "=" + Arrays.toString(charArray));
                 } else {
                     stop = true;
                 }
             }
         }
-
-        // далее свыше [1, 0, 1] => [i, j, i]
         if (counterReverseNumbers < n) {
             stop = false;
             int i = 1;
@@ -64,7 +55,6 @@ public class Palindrome2 {
             int lengthVar = 3;
             counterReverseNumbers = 19;
             while (!stop) {
-                // ---- for i -----
                 while (!stop) {
                     charArray = new char[lengthVar];
                     if (i > 9) {
@@ -72,65 +62,26 @@ public class Palindrome2 {
                     }
                     charArray[0] = (char) (i + '0');
                     charArray[lengthVar - 1] = (char) (i + '0');
-
-                    // ---- for j -----
                     while ((!stop) && (i < 10)) {
-
-                        // [1, 2, 0, 2, 1]
-                        // [1, 2, 1, 2, 1]
-                        // [1, 2, 2, 2, 1] V lengthVar = 5, j = 2,
-                        //
-                        // ...
-                        // [1, 3, 0, 0, 3, 1]
-                        // [1, 3, 1, 1, 3, 1]
-                        // [1, 3, 2, 2, 3, 1]
-                        // [1, 3, 3, 3, 3, 1] V lengthVar = 6, j = 3,
-                        // ...
-                        // [1, 2, 2, 2, 2, 2, 1] (382)
-                        // [1, 3, 0, 0, 0, 3, 1]
-                        // [1, 3, 1, 0, 1, 3, 1]
-                        // [1, 3, 1, 1, 1, 3, 1]
-                        // [1, 3, 1, 2, 1, 3, 1]
-                        // [1, 3, 2, 0, 2, 3, 1]
-                        // [1, 3, 2, 1, 2, 3, 1]
-                        // [1, 3, 2, 2, 2, 3, 1]
-                        // [1, 3, 2, 3, 2, 3, 1]
-                        // [1, 3, 3, 3, 3, 3, 1] (383) V
-
-                        //for (int l = 0; l <= j; l++) {
-
-                            for (int k = 1; k <= lengthVar - 2; k++) {
-                                charArray[k] = (char) (j + '0');
-                            }
-                            counterReverseNumbers++;
-                            System.out.println(counterReverseNumbers + "=" + Arrays.toString(charArray));
-                        //}
-
-
+                        for (int k = 1; k <= lengthVar - 2; k++) {
+                            charArray[k] = (char) (j + '0');
+                        }
+                        counterReverseNumbers++;
                         if (counterReverseNumbers == n) {
                             stop = true;
                         }
-
                         j++;
-
                         if ((j > 9) && (!stop)) {
                             j = 0;
                             i++;
                             charArray[0] = (char) (i + '0');
                             charArray[lengthVar - 1] = (char) (i + '0');
                         }
-
                     }
-                    // ---- for j -----
-                    //i++;
                     lengthVar++;
                 }
-                // ---- for i -----
-
             }
         }
         return new BigInteger(new String(charArray));
     }
-
-
 }

@@ -7,7 +7,10 @@ import java.math.BigInteger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@DisplayName("Methods testing the Palindrome class")
+/**
+ * Класс содержит тесты для Palindrome4
+ */
+@DisplayName("Methods testing the Palindrome4 class")
 class Palindrome4Test {
 
     @Test
@@ -98,6 +101,12 @@ class Palindrome4Test {
     @DisplayName("findReverseNumber(300) => 20002")
     void findReverseNumberExecutedSuccess15() {
         assertEquals(BigInteger.valueOf(20002), Palindrome4.findReverseNumber(300));
+    }
+
+    @Test
+    @DisplayName("findReverseNumber(321) => 22122")
+    void findReverseNumberExecutedSuccess15_1() {
+        assertEquals(BigInteger.valueOf(22122), Palindrome4.findReverseNumber(321));
     }
 
     @Test

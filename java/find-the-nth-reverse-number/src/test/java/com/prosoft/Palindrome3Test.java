@@ -94,11 +94,27 @@ class Palindrome3Test {
     }
 
     @Test
-    @DisplayName("findReverseNumber(100000000000L) => 900000000000000000009")
+    @DisplayName("findReverseNumber(31680178650) => 216801786505687108612")
     void findReverseNumberExecutedSuccess15() {
-        assertEquals(new BigInteger("900000000000000000009"), Palindrome3.findReverseNumber(100000000000L));
+        assertEquals(new BigInteger("216801786505687108612"), Palindrome3.findReverseNumber(31680178650L));
     }
 
+    @Test
+    @DisplayName("findReverseNumber(87824081010) => 778240810101018042877")
+    void findReverseNumberExecutedSuccess16() {
+        assertEquals(new BigInteger("778240810101018042877"), Palindrome3.findReverseNumber(87824081010L));
+    }
 
+    @Test
+    @DisplayName("findReverseNumber(39467644060) => 294676440606044676492")
+    void findReverseNumberExecutedSuccess17() {
+        assertEquals(new BigInteger("294676440606044676492"), Palindrome3.findReverseNumber(39467644060L));
+    }
+
+    @Test
+    @DisplayName("findReverseNumber(100000000000L) => 900000000000000000009")
+    void findReverseNumberExecutedSuccess18() {
+        assertEquals(new BigInteger("900000000000000000009"), Palindrome3.findReverseNumber(100000000000L));
+    }
 
 }

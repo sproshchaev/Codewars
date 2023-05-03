@@ -3,99 +3,52 @@ package com.prosoft;
 import java.math.BigInteger;
 import java.util.Collections;
 
-
 /**
- * Решение 3: все тесты проходят за 6 сек.
+ * Palindrome. Решение №3: все тесты проходят за 59 мс.
  */
 public class Palindrome {
+
+    /**
+     * Reverse Number is a number which is the same when reversed.
+     * For example, the first 20 Reverse Numbers are:
+     * 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 22, 33, 44, 55, 66, 77, 88, 99, 101
+     * TASK: You need to return the nth reverse number. (Assume that reverse numbers start from 0 as shown in the example.)
+     * NOTES: 1 < n <= 100000000000
+     *
+     * @param n
+     * @return
+     */
     public static BigInteger findReverseNumber(long n) {
         String[] initArray = getStartBeginEnv(n);
-        int lengthReverseNumber = Integer.valueOf(initArray[0]);
-        long counterReverseNumbers = n > 1 ? Long.valueOf(initArray[1]) - 1 : Long.valueOf(initArray[1]);
+        int lengthReverseNumber = Integer.parseInt(initArray[0]);
+        long counterReverseNumbers = Long.parseLong(initArray[1]);
         BigInteger reverseNumber = new BigInteger(initArray[2]);
-        long min = Long.valueOf(initArray[3]);
-        long max = Long.valueOf(initArray[4]);
-        boolean stop = false;
-        long oldMin = 0;
-
-        if (Long.valueOf(initArray[1]) == n) {
-            stop = true;
-        }
-
-        while (!stop) {
-
-          //  setMin = true;
-
-            // Для четных - здесь изменить min
-            if ((lengthReverseNumber % 2 == 0) && ((counterReverseNumbers + max - min + 1) > n)) {
-                System.out.println("lengthReverseNumber=" + lengthReverseNumber);
-                //min = (n - counterReverseNumbers + min);
-                //counterReverseNumbers = counterReverseNumbers + (n - counterReverseNumbers + min);
+        long min = Long.parseLong(initArray[3]);
+        if (n < 11) {
+            reverseNumber = new BigInteger(String.valueOf(n - 1));
+        } else {
+            if (lengthReverseNumber % 2 != 0) {
+                reverseNumber = buildNumberForOddLength(n, min, counterReverseNumbers);
             }
-
-            // Для нечетных - здесь изменить min
-            if ((lengthReverseNumber % 2 != 0) && (lengthReverseNumber > 1) && ((counterReverseNumbers + max - min + 1) * 10 > n)) {
-                //System.out.println("lengthReverseNumber=" + lengthReverseNumber);
-               // oldMin = min;
-               // min = min + ((long) Math.floor((n - counterReverseNumbers) / min)) ;//- 1;
-               // counterReverseNumbers = counterReverseNumbers + 10 * ((long) Math.floor((n - counterReverseNumbers) / oldMin));
-            }
-
-
-            for (long i = min; i <= max; i++) {
-
-                if (lengthReverseNumber == 1) {
-                    counterReverseNumbers++;
-                    if (n == counterReverseNumbers) {
-                        reverseNumber = new BigInteger(String.valueOf(i));
-                        stop = true;
-                        break;
-                    }
-                } else {
-                    if (lengthReverseNumber % 2 == 0) {
-                        // 1|1
-                        counterReverseNumbers++;
-                        //System.out.println("+1 = " + ++_delME);
-                        if (n == counterReverseNumbers) {
-                            reverseNumber = new BigInteger(i + new StringBuilder(String.valueOf(i)).reverse().toString());
-                            stop = true;
-                            break;
-                        }
-                    } else {
-                        // 1|0|1 Проверяем - если counterReverseNumbers + 10 < n то цикл пропускаем
-                        if (counterReverseNumbers + 10 > n) {
-                            for (int j = 0; j <= 9; j++) {
-                                counterReverseNumbers++;
-                                //System.out.println("+1 = " + ++_delME);
-                                if (n == counterReverseNumbers) {
-                                    reverseNumber = new BigInteger(String.valueOf(i) + String.valueOf(j) + new StringBuilder(String.valueOf(i)).reverse().toString());
-                                    stop = true;
-                                    break;
-                                }
-                            }
-                        } else {
-                            counterReverseNumbers = counterReverseNumbers + 10;
-                            //System.out.println("+10 = " + ++_delME);
-                        }
-                    }
-                }
-                if (stop) {
-                    break;
-                }
-            }
-            lengthReverseNumber++;
-            if (min == 0) {
-                min = 1;
-            } else {
-                if ((lengthReverseNumber % 2 == 0) && (lengthReverseNumber > 3)) {
-                    min = min * 10;
-                }
-            }
-            if ((lengthReverseNumber % 2 == 0) && (lengthReverseNumber > 3)) {
-                max = Long.valueOf(String.valueOf(max) + "9");
+            if (lengthReverseNumber % 2 == 0) {
+                reverseNumber = buildNumberForEvenLength(n, min, counterReverseNumbers);
             }
         }
         return reverseNumber;
+    }
+
+    private static BigInteger buildNumberForOddLength(long n, long min, long count) {
+        final int DEC = 10;
+        long integerPart = (long) (((n - count) / (double) DEC));
+        long firstDecimal = (long) (Math.floor(((n - count) / (double) DEC) * DEC) % DEC);
+        return new BigInteger(String.valueOf(min + integerPart) + String.valueOf(firstDecimal)
+                + new StringBuilder(String.valueOf(min + integerPart)).reverse().toString());
+    }
+
+    private static BigInteger buildNumberForEvenLength(long n, long min, long count) {
+        long startingPosition = n - count + min;
+        return new BigInteger(String.valueOf(startingPosition)
+                + new StringBuilder(String.valueOf(startingPosition)).reverse().toString());
     }
 
     /**
