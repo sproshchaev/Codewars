@@ -3,6 +3,9 @@ package com.prosoft;
 import java.math.BigInteger;
 import java.util.Arrays;
 
+/**
+ * Решение 1
+ */
 public class Palindrome2 {
     /**
      * Reverse Number is a number which is the same when reversed.

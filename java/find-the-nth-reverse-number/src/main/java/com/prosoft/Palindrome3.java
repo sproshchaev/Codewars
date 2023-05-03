@@ -2,6 +2,9 @@ package com.prosoft;
 
 import java.math.BigInteger;
 
+/**
+ * Решение 2
+ */
 public class Palindrome3 {
     public static BigInteger findReverseNumber(long n) {
         long counterReverseNumbers = 0;
