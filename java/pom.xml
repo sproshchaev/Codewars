@@ -16,6 +16,7 @@
         <module>sum-strings-as-numbers</module>
         <module>adding-big-numbers</module>
         <module>find-the-nth-reverse-number</module>
+        <module>range-extraction</module>
     </modules>
 
 </project>
