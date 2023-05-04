@@ -17,6 +17,7 @@ Solution.rangeExtraction(new int[] {-10, -9, -8, -6, -3, -2, -1, 0, 1, 3, 4, 5, 
 
 ```
 ### Solution
+Перебирать массив последовательно и проверять элемент +1 на разницу с предыдущим элементом.
 
 ### References
 1. JUnit Jupiter API https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
