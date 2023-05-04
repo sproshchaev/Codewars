@@ -17,6 +17,7 @@
         <module>adding-big-numbers</module>
         <module>find-the-nth-reverse-number</module>
         <module>range-extraction</module>
+        <module>roman-numerals-helper</module>
     </modules>
 
 </project>
