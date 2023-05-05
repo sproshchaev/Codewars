@@ -4,11 +4,9 @@ public class RomanNumerals {
 
     public static String toRoman(int n) {
         StringBuilder result = new StringBuilder();
-        String[] romanNum = new String[]{"I", "IV", "V", "X", "L", "C", "D", "M"};
-        int[] arabicNum = new int[]{1, 4, 5, 10, 50, 100, 500, 1000};
-        // --- 1-ый вариант
-        int ostatok = n;
-        int curr = -1;
+        String[] romanNum = new String[] {"I", "IV", "V", "X", "L", "C", "D", "M"};
+        int[] arabicNum = new int[] {1, 4, 5, 10, 50, 100, 500, 1000};
+        int ostatok = n, curr;
         while (ostatok > 0) {
             curr = -1;
             for (int i = 0; i < arabicNum.length; i++) {
@@ -28,7 +26,10 @@ public class RomanNumerals {
         if (!romanNumIsCorrect(result.toString())) {
             // --- 2-ой вариант (для 90) находим 100 и далее вычитаем
             System.out.println("По второму варианту!");
-
+            // max Находим интервал для 400: < 500,
+            //                      для 90: < 100
+            // min Находим  для 400: д.б. 500 - X = 400, где X = 100
+            //               для 90: д.б. 100 - X = 90, где X = 10
         }
         return result.toString();
     }
