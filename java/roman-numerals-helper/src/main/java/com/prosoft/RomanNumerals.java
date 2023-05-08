@@ -1,48 +1,84 @@
 package com.prosoft;
 
 public class RomanNumerals {
+    final static char[] ROMAN_NUM_ARR = new char[]{'I', 'V', 'X', 'L', 'C', 'D', 'M'};
+    final static int[] ARABIC_NUM_ARR = new int[]{1, 5, 10, 50, 100, 500, 1000};
 
     public static String toRoman(int n) {
         StringBuilder result = new StringBuilder();
-        String[] romanNum = new String[] {"I", "IV", "V", "X", "L", "C", "D", "M"};
-        int[] arabicNum = new int[] {1, 4, 5, 10, 50, 100, 500, 1000};
-        int ostatok = n, curr;
-        while (ostatok > 0) {
-            curr = -1;
-            for (int i = 0; i < arabicNum.length; i++) {
-                if ((ostatok >= arabicNum[i]) && (i < arabicNum.length - 1) && (ostatok < arabicNum[i + 1])) {
-                    curr = arabicNum[i];
-                    result.append(romanNum[i]);
+        int remain = n, arabicNum;
+        while (remain > 0) {
+
+            arabicNum = -1;
+            for (int i = 0; i < ARABIC_NUM_ARR.length; i++) {
+                if ((remain >= ARABIC_NUM_ARR[i]) && (i < ARABIC_NUM_ARR.length - 1) && (remain < ARABIC_NUM_ARR[i + 1])) {
+                    arabicNum = ARABIC_NUM_ARR[i];
+                    result.append(ROMAN_NUM_ARR[i]);
                     break;
                 }
             }
-            if (curr == -1) {
-                curr = arabicNum[arabicNum.length - 1];
-                result.append(romanNum[arabicNum.length - 1]);
+            if (arabicNum == -1) {
+                arabicNum = ARABIC_NUM_ARR[ARABIC_NUM_ARR.length - 1];
+                result.append(ROMAN_NUM_ARR[ARABIC_NUM_ARR.length - 1]);
             }
-            ostatok = ostatok - curr;
+            remain = remain - arabicNum;
         }
-        // Выполнить проверку: цифры V, L, D не могут повторяться; цифры I, X, C, M могут повторяться не более трех раз подряд
+
         if (!romanNumIsCorrect(result.toString())) {
-            // --- 2-ой вариант (для 90) находим 100 и далее вычитаем
-            System.out.println("По второму варианту!");
-            // max Находим интервал для 400: < 500,
-            //                      для 90: < 100
-            // min Находим  для 400: д.б. 500 - X = 400, где X = 100
-            //               для 90: д.б. 100 - X = 90, где X = 10
+            result = new StringBuilder(alg2(n));
         }
         return result.toString();
     }
 
-    public static int fromRoman(String romanNumeral) {
-        return 0;
+    private static String alg2(int n) {
+        StringBuilder result = new StringBuilder("");
+        int arabicMax = 0;
+        for (int i = 0; i < ARABIC_NUM_ARR.length; i++) {
+            if (ARABIC_NUM_ARR[i] > n) {
+                arabicMax = ARABIC_NUM_ARR[i];
+                result.append(ROMAN_NUM_ARR[i]);
+                break;
+            }
+        }
+        for (int i = ARABIC_NUM_ARR.length - 1; i >= 0; i--) {
+            if ((arabicMax - ARABIC_NUM_ARR[i]) == n) {
+                result.insert(0, ROMAN_NUM_ARR[i]);
+                break;
+            }
+        }
+        return result.toString();
     }
 
-    // цифры V, L, D не могут повторяться; цифры I, X, C, M могут повторяться не более трех раз подряд
-    private static boolean romanNumIsCorrect(String romanNumeral) {
+    public static int fromRoman(String romanNum) {
+        int result = 0;
+        for (int i = 0; i < romanNum.length(); i++) {
+            if ((romanNum.length() == 1) || (i == romanNum.length() - 1) || ((i + 1 < romanNum.length())
+                    && (getArabic(romanNum.charAt(i)) >= getArabic(romanNum.charAt(i + 1))))) {
+                result += getArabic(romanNum.charAt(i));
+            }
+            if ((i + 1 < romanNum.length()) && (getArabic(romanNum.charAt(i)) < getArabic(romanNum.charAt(i + 1)))) {
+                result = result + getArabic(romanNum.charAt(i + 1)) - getArabic(romanNum.charAt(i));
+                if (i == romanNum.length() - 2) break;
+            }
+        }
+        return result;
+    }
+
+    private static int getArabic(char ch) {
+        int result = 0;
+        for (int i = 0; i < ROMAN_NUM_ARR.length; i++) {
+            if (ROMAN_NUM_ARR[i] == ch) {
+                result = ARABIC_NUM_ARR[i];
+                break;
+            }
+        }
+        return result;
+    }
+
+    private static boolean romanNumIsCorrect(String romanNum) {
         boolean correct = true;
-        for (int i = 0; i < romanNumeral.length(); i++) {
-            if (twoInRowOrMoreThanThree(romanNumeral, i)) {
+        for (int i = 0; i < romanNum.length(); i++) {
+            if (twoInRowOrMoreThanThree(romanNum, i)) {
                 correct = false;
                 break;
             }
@@ -50,27 +86,27 @@ public class RomanNumerals {
         return correct;
     }
 
-    private static boolean twoInRowOrMoreThanThree(String romanNumeral, int i) {
-        return (twoInRow(romanNumeral, i, 'V') || twoInRow(romanNumeral, i, 'L') || twoInRow(romanNumeral, i, 'D')
-                || moreThanThree(romanNumeral, i, 'I') || moreThanThree(romanNumeral, i, 'X') ||
-                moreThanThree(romanNumeral, i, 'C') || moreThanThree(romanNumeral, i, 'M'));
+    private static boolean twoInRowOrMoreThanThree(String romanNum, int i) {
+        return (twoInRow(romanNum, i, 'V') || twoInRow(romanNum, i, 'L') || twoInRow(romanNum, i, 'D')
+                || moreThanThree(romanNum, i, 'I') || moreThanThree(romanNum, i, 'X') ||
+                moreThanThree(romanNum, i, 'C') || moreThanThree(romanNum, i, 'M'));
     }
 
-    private static boolean twoInRow(String romanNumeral, int i, char chr) {
+    private static boolean twoInRow(String romanNum, int i, char chr) {
         boolean result = false;
-        if (i + 1 < romanNumeral.length() - 1) {
-            if ((romanNumeral.charAt(i) == chr) && (romanNumeral.charAt(i + 1) == chr)) {
+        if (i + 1 < romanNum.length() - 1) {
+            if ((romanNum.charAt(i) == chr) && (romanNum.charAt(i + 1) == chr)) {
                 result = true;
             }
         }
         return result;
     }
 
-    private static boolean moreThanThree(String romanNumeral, int i, char chr) {
+    private static boolean moreThanThree(String romanNum, int i, char chr) {
         boolean result = false;
-        if (i + 3 < romanNumeral.length()) {
-            if ((romanNumeral.charAt(i) == chr) && (romanNumeral.charAt(i + 1) == chr) && (romanNumeral.charAt(i + 2) == chr)
-                    && (romanNumeral.charAt(i + 3) == chr)) {
+        if (i + 3 < romanNum.length()) {
+            if ((romanNum.charAt(i) == chr) && (romanNum.charAt(i + 1) == chr) && (romanNum.charAt(i + 2) == chr)
+                    && (romanNum.charAt(i + 3) == chr)) {
                 result = true;
             }
         }
