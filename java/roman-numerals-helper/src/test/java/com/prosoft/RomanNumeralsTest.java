@@ -51,8 +51,7 @@ class RomanNumeralsTest {
     }
 
     @Test
-    @DisplayName("" +
-            " ==> 'MMDCCCXCVIII'")
+    @DisplayName("toRoman(2898) ==> 'MMDCCCXCVIII'")
     void toRomanExecutedSuccess8() {
         assertEquals("MMDCCCXCVIII", RomanNumerals.toRoman(2898));
     }
@@ -99,6 +98,11 @@ class RomanNumeralsTest {
         assertEquals(1, RomanNumerals.fromRoman("I"));
     }
 
+    @Test
+    @DisplayName("fromRoman('DCCCXCVI') ==> 896")
+    void fromRomanExecutedSuccess8() {
+        assertEquals(896, RomanNumerals.fromRoman("DCCCXCVI"));
+    }
 
 
 }

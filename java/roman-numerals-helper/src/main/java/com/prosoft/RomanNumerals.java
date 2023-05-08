@@ -1,13 +1,20 @@
 package com.prosoft;
 
 public class RomanNumerals {
+
     final static char[] ROMAN_NUM_ARR = new char[]{'I', 'V', 'X', 'L', 'C', 'D', 'M'};
     final static int[] ARABIC_NUM_ARR = new int[]{1, 5, 10, 50, 100, 500, 1000};
+
+//    final static String[] ROMAN_NUM_ARR = new String[]{"I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M"};
+//    final static int[] ARABIC_NUM_ARR = new int[]{1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000};
 
     public static String toRoman(int n) {
         StringBuilder result = new StringBuilder();
         int remain = n, arabicNum;
+        String _del_me_ = "";
         while (remain > 0) {
+
+            _del_me_ = alg2(remain);
 
             arabicNum = -1;
             for (int i = 0; i < ARABIC_NUM_ARR.length; i++) {
@@ -40,13 +47,15 @@ public class RomanNumerals {
                 break;
             }
         }
+        boolean found = false;
         for (int i = ARABIC_NUM_ARR.length - 1; i >= 0; i--) {
             if ((arabicMax - ARABIC_NUM_ARR[i]) == n) {
                 result.insert(0, ROMAN_NUM_ARR[i]);
+                found = true;
                 break;
             }
         }
-        return result.toString();
+        return found ? result.toString() : "";
     }
 
     public static int fromRoman(String romanNum) {
@@ -58,7 +67,9 @@ public class RomanNumerals {
             }
             if ((i + 1 < romanNum.length()) && (getArabic(romanNum.charAt(i)) < getArabic(romanNum.charAt(i + 1)))) {
                 result = result + getArabic(romanNum.charAt(i + 1)) - getArabic(romanNum.charAt(i));
-                if (i == romanNum.length() - 2) break;
+                if (i + 1 < romanNum.length()) {
+                    i++;
+                }
             }
         }
         return result;
