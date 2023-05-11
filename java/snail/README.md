@@ -23,7 +23,9 @@ NOTE 2: The 0x0 (empty matrix) is represented as en empty array inside an array 
 ```
 ### Solution
 ```
-      Обход массива по схеме "улитка"
+      Обход массива по схеме "улитка": разбиваем обход по внешнему контуру массива на шаги a (1,2,3,3,3), b (6,9,4,9,), 
+      c (8,7,6,5), d (0,7,4). На каждом следующем шаге изменяем контур массива до того момента, пока результат 
+      в очередном шаге не будет возвращать пустые массивы (по a,b,c,d) 
                     a
       array = [[1,2,3,3,3],
                [4,5,6,6,6],
@@ -35,4 +37,5 @@ NOTE 2: The 0x0 (empty matrix) is represented as en empty array inside an array 
    
 ```
 ### References
-1. JUnit Jupiter API https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
+1. Число элементов в двумерном массиве Java https://vk.com/@prosoft72-chislo-elementov-v-dvumernom-massive-java
+2. JUnit Jupiter API https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
