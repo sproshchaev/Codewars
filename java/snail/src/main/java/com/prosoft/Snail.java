@@ -7,7 +7,8 @@ public class Snail {
     public static int[] snail(int[][] array) {
         int[] result = new int[array.length * array[0].length];
         int step = 0, resultIndex = 0;
-        while ((getA(array, step).length != 0) || (getB(array, step).length != 0) || (getC(array, step).length != 0) || (getD(array, step).length != 0)) {
+        while ((step < array.length) && ((getA(array, step).length != 0) || (getB(array, step).length != 0)
+                || (getC(array, step).length != 0) || (getD(array, step).length != 0))) {
             System.arraycopy(getA(array, step), 0, result, resultIndex, getA(array, step).length);
             resultIndex += getA(array, step).length;
             System.arraycopy(getB(array, step), 0, result, resultIndex, getB(array, step).length);
