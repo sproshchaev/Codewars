@@ -23,6 +23,15 @@ NOTE 2: The 0x0 (empty matrix) is represented as en empty array inside an array 
 ```
 ### Solution
 ```
+      Обход массива по схеме "улитка"
+                    a
+      array = [[1,2,3,3,3],
+               [4,5,6,6,6],
+             d [7,8,9,9,9], b
+               [0,1,2,3,4],
+               [5,6,7,8,9]]
+                    c
+      snail(array) => [1,2,3,3,3,6,9,4,9,8,7,6,5,0,7,4,5,6,6,9,3,2,1,8,9]
    
 ```
 ### References
