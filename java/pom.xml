@@ -19,6 +19,7 @@
         <module>range-extraction</module>
         <module>roman-numerals-helper</module>
         <module>snail</module>
+        <module>next-smaller-number-with-the-same-digits</module>
     </modules>
 
 </project>
