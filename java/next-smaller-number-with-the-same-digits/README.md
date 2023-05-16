@@ -24,7 +24,27 @@ Next smaller number with the same digits https://www.codewars.com/kata/next-smal
   The function you write for this challenge is the inverse of this kata: "Next bigger number with the same digits."
 ```
 ### Solution
-```   
+```
+
+         kod_massiva: 0 1 2              079
+                      0 2 1              097* - последний с предпоследним
+                      1 0 2              709* - первый со вторым
+                      1 2 0              790
+                      2 0 1              907
+                      0 1 2 => 2 1 0     970
+
+         kod_massiva: 0 1 2 3
+                      0 1 3 2
+                      0 3 1 2
+                      0 3 2 1
+                      1 0 2 3
+                      1 0 3 2
+                      1 2 3 0
+                      1 3 2 0
+                      2 0 1 3
+                      2 3 0 1
+                       
+   
 ```
 ### References
 1. JUnit Jupiter API https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
