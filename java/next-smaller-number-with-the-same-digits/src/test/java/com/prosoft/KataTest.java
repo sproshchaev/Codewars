@@ -15,9 +15,9 @@ public class KataTest {
     }
 
     @Test
-    @DisplayName("nextSmaller(531) ==> 513")
+    @DisplayName("nextSmaller(513) ==> 351")
     void nextSmallerExecutedSuccess2() {
-        assertEquals(513, Kata.nextSmaller(531));
+        assertEquals(351, Kata.nextSmaller(513));
     }
 
     @Test
